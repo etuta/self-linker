@@ -1,0 +1,269 @@
+Authors: Tenzin Dolma Gyalpo and Eliza Teodora Tuta
+
+Websites used: the class Website
+               Stack Overflow
+
+GDB Script
+
+[etuta@eliza assignment4]$ gdb self-linker
+
+//I chose as the the break points lines 47 and 48, as these is where I will be
+//calling the function puts
+
+(gdb) break 47
+Breakpoint 1 at 0x12e2: file self-linker.c, line 47.
+(gdb) break 48
+Breakpoint 2 at 0x12ee: file self-linker.c, line 48.
+(gdb) run
+Starting program: /home/etuta/Desktop/cs315/assignment4/self-linker
+The first entry of the global offset table is 0x3de8
+The GOT starts at address 0x555555558000
+handle 0x7ffff7fb44f0
+=handle 0x7ffff7fb44f0
+pointer to function 0x7ffff7e5da40
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffe858) at self-linker.c:47
+47	  puts("hello");
+
+// Disassemble the code
+
+
+(gdb) disas
+Dump of assembler code for function main:
+   0x00005555555551b9 <+0>:	push   %rbp
+   0x00005555555551ba <+1>:	mov    %rsp,%rbp
+   0x00005555555551bd <+4>:	sub    $0x20,%rsp
+   0x00005555555551c1 <+8>:	mov    %edi,-0x14(%rbp)
+   0x00005555555551c4 <+11>:	mov    %rsi,-0x20(%rbp)
+   0x00005555555551c8 <+15>:	mov    0x2e31(%rip),%rax        # 0x555555558000
+   0x00005555555551cf <+22>:	mov    %rax,%rsi
+   0x00005555555551d2 <+25>:	lea    0xe2f(%rip),%rdi        # 0x555555556008
+   0x00005555555551d9 <+32>:	mov    $0x0,%eax
+   0x00005555555551de <+37>:	callq  0x555555555040 <printf@plt>
+   0x00005555555551e3 <+42>:	lea    0x2e16(%rip),%rsi        # 0x555555558000
+   0x00005555555551ea <+49>:	lea    0xe49(%rip),%rdi        # 0x55555555603a
+   0x00005555555551f1 <+56>:	mov    $0x0,%eax
+   0x00005555555551f6 <+61>:	callq  0x555555555040 <printf@plt>
+   0x00005555555551fb <+66>:	mov    $0x1,%esi
+   0x0000555555555200 <+71>:	lea    0xe51(%rip),%rdi        # 0x555555556058
+   0x0000555555555207 <+78>:	callq  0x555555555060 <dlopen@plt>
+   0x000055555555520c <+83>:	mov    %rax,-0x10(%rbp)
+   0x0000555555555210 <+87>:	mov    -0x10(%rbp),%rax
+   0x0000555555555214 <+91>:	mov    %rax,%rsi
+--Type <RET> for more, q to quit, c to continue without paging--
+   0x0000555555555217 <+94>:	lea    0xe49(%rip),%rdi        # 0x555555556067
+   0x000055555555521e <+101>:	mov    $0x0,%eax
+   0x0000555555555223 <+106>:	callq  0x555555555040 <printf@plt>
+   0x0000555555555228 <+111>:	cmpq   $0x0,-0x10(%rbp)
+   0x000055555555522d <+116>:	jne    0x55555555525c <main+163>
+   0x000055555555522f <+118>:	callq  0x5555555550b0 <dlerror@plt>
+   0x0000555555555234 <+123>:	mov    %rax,%rdx
+   0x0000555555555237 <+126>:	mov    0x2e42(%rip),%rax        # 0x555555558080 <stderr@@GLIBC_2.2.5>
+   0x000055555555523e <+133>:	lea    0xe2e(%rip),%rsi        # 0x555555556073
+   0x0000555555555245 <+140>:	mov    %rax,%rdi
+   0x0000555555555248 <+143>:	mov    $0x0,%eax
+   0x000055555555524d <+148>:	callq  0x555555555050 <fprintf@plt>
+   0x0000555555555252 <+153>:	mov    $0x1,%edi
+   0x0000555555555257 <+158>:	callq  0x555555555080 <exit@plt>
+   0x000055555555525c <+163>:	mov    -0x10(%rbp),%rax
+   0x0000555555555260 <+167>:	mov    %rax,%rsi
+   0x0000555555555263 <+170>:	lea    0xe0d(%rip),%rdi        # 0x555555556077
+   0x000055555555526a <+177>:	mov    $0x0,%eax
+   0x000055555555526f <+182>:	callq  0x555555555040 <printf@plt>
+   0x0000555555555274 <+187>:	mov    -0x10(%rbp),%rax
+   0x0000555555555278 <+191>:	lea    0xe03(%rip),%rsi        # 0x555555556082
+   0x000055555555527f <+198>:	mov    %rax,%rdi
+--Type <RET> for more, q to quit, c to continue without paging--
+   0x0000555555555282 <+201>:	callq  0x5555555550a0 <dlsym@plt>
+   0x0000555555555287 <+206>:	mov    %rax,-0x8(%rbp)
+   0x000055555555528b <+210>:	cmpq   $0x0,-0x8(%rbp)
+   0x0000555555555290 <+215>:	jne    0x5555555552bc <main+259>
+   0x0000555555555292 <+217>:	mov    0x2de7(%rip),%rax        # 0x555555558080 <stderr@@GLIBC_2.2.5>
+   0x0000555555555299 <+224>:	mov    %rax,%rcx
+   0x000055555555529c <+227>:	mov    $0x1d,%edx
+   0x00005555555552a1 <+232>:	mov    $0x1,%esi
+   0x00005555555552a6 <+237>:	lea    0xdda(%rip),%rdi        # 0x555555556087
+   0x00005555555552ad <+244>:	callq  0x555555555090 <fwrite@plt>
+   0x00005555555552b2 <+249>:	mov    $0x1,%edi
+   0x00005555555552b7 <+254>:	callq  0x555555555080 <exit@plt>
+   0x00005555555552bc <+259>:	mov    -0x8(%rbp),%rax
+   0x00005555555552c0 <+263>:	mov    %rax,%rsi
+   0x00005555555552c3 <+266>:	lea    0xddb(%rip),%rdi        # 0x5555555560a5
+   0x00005555555552ca <+273>:	mov    $0x0,%eax
+   0x00005555555552cf <+278>:	callq  0x555555555040 <printf@plt>
+   0x00005555555552d4 <+283>:	lea    0x2d3d(%rip),%rdx        # 0x555555558018 <puts@got.plt>
+   0x00005555555552db <+290>:	mov    -0x8(%rbp),%rax
+   0x00005555555552df <+294>:	mov    %rax,(%rdx)
+=> 0x00005555555552e2 <+297>:	lea    0xdd4(%rip),%rdi        # 0x5555555560bd
+--Type <RET> for more, q to quit, c to continue without paging--
+   0x00005555555552e9 <+304>:	callq  0x555555555030 <puts@plt>
+   0x00005555555552ee <+309>:	lea    0xdce(%rip),%rdi        # 0x5555555560c3
+   0x00005555555552f5 <+316>:	callq  0x555555555030 <puts@plt>
+   0x00005555555552fa <+321>:	mov    -0x10(%rbp),%rax
+   0x00005555555552fe <+325>:	mov    %rax,%rdi
+   0x0000555555555301 <+328>:	callq  0x555555555070 <dlclose@plt>
+   0x0000555555555306 <+333>:	mov    $0x0,%eax
+   0x000055555555530b <+338>:	leaveq
+   0x000055555555530c <+339>:	retq
+
+//After disassembling, we notice that the program is about to issue the call
+//instruction that executes the puts entry in the PLT:
+// "=> 0x00005555555552e2 <+297>:	lea    0xdd4(%rip),%rdi        # 0x5555555560bd"
+
+//We execute two instructions using the "si" (step instruction) command twice,
+//at which point we will be about to execute the first instruction of the puts
+//entry in the PLT
+
+End of assembler dump.
+(gdb) si
+0x00005555555552e9	47	  puts("hello");
+(gdb) si
+0x0000555555555030 in puts@plt ()
+(gdb) disas
+Dump of assembler code for function puts@plt:
+=> 0x0000555555555030 <+0>:	jmpq   *0x2fe2(%rip)  # 0x555555558018 <puts@got.plt>
+   0x0000555555555036 <+6>:	pushq  $0x0
+   0x000055555555503b <+11>:	jmpq   0x555555555020
+End of assembler dump.
+
+//By performing the instruction above
+//"=> 0x0000555555555030 <+0>:	jmpq   *0x2fe2(%rip)  # 0x555555558018 <puts@got.plt>"
+//we will go in the GOT and grab the entry for puts (which should now be empty)
+ and then jump to it
+
+//In order to test the above hypothesis we look at the data at that address
+
+(gdb) x/gx 0x555555558018
+0x555555558018 <puts@got.plt>:	0x00007ffff7e5da40
+
+//so the jmp instruction will jump to address 0x00007ffff7e5da40
+
+//We want to execute only that jmp instruction:
+
+(gdb) disas
+Dump of assembler code for function puts@plt:
+=> 0x0000555555555030 <+0>:	jmpq   *0x2fe2(%rip)        # 0x555555558018 <puts@got.plt>
+   0x0000555555555036 <+6>:	pushq  $0x0
+   0x000055555555503b <+11>:	jmpq   0x555555555020
+End of assembler dump.
+
+//we are now about to execute the second instruction of the puts PLT entry
+//instruction stores the value 0 on the stack, which is is the index of
+//the function being linked and to know to know which entry in the GOT to fix up
+//the jump target is the code that performs the dynamic linking
+
+//we continue execution, which will stop at the second call to puts
+
+(gdb) continue
+Continuing.
+hello
+
+Breakpoint 2, main (argc=1, argv=0x7fffffffe858) at self-linker.c:48
+48	  puts ("world!");
+(gdb) disas
+Dump of assembler code for function main:
+   0x00005555555551b9 <+0>:	push   %rbp
+   0x00005555555551ba <+1>:	mov    %rsp,%rbp
+   0x00005555555551bd <+4>:	sub    $0x20,%rsp
+   0x00005555555551c1 <+8>:	mov    %edi,-0x14(%rbp)
+   0x00005555555551c4 <+11>:	mov    %rsi,-0x20(%rbp)
+   0x00005555555551c8 <+15>:	mov    0x2e31(%rip),%rax        # 0x555555558000
+   0x00005555555551cf <+22>:	mov    %rax,%rsi
+   0x00005555555551d2 <+25>:	lea    0xe2f(%rip),%rdi        # 0x555555556008
+   0x00005555555551d9 <+32>:	mov    $0x0,%eax
+   0x00005555555551de <+37>:	callq  0x555555555040 <printf@plt>
+   0x00005555555551e3 <+42>:	lea    0x2e16(%rip),%rsi        # 0x555555558000
+   0x00005555555551ea <+49>:	lea    0xe49(%rip),%rdi        # 0x55555555603a
+   0x00005555555551f1 <+56>:	mov    $0x0,%eax
+   0x00005555555551f6 <+61>:	callq  0x555555555040 <printf@plt>
+   0x00005555555551fb <+66>:	mov    $0x1,%esi
+   0x0000555555555200 <+71>:	lea    0xe51(%rip),%rdi        # 0x555555556058
+   0x0000555555555207 <+78>:	callq  0x555555555060 <dlopen@plt>
+   0x000055555555520c <+83>:	mov    %rax,-0x10(%rbp)
+   0x0000555555555210 <+87>:	mov    -0x10(%rbp),%rax
+   0x0000555555555214 <+91>:	mov    %rax,%rsi
+   0x0000555555555217 <+94>:	lea    0xe49(%rip),%rdi        # 0x555555556067
+   0x000055555555521e <+101>:	mov    $0x0,%eax
+--Type <RET> for more, q to quit, c to continue without paging--
+   0x0000555555555223 <+106>:	callq  0x555555555040 <printf@plt>
+   0x0000555555555228 <+111>:	cmpq   $0x0,-0x10(%rbp)
+   0x000055555555522d <+116>:	jne    0x55555555525c <main+163>
+   0x000055555555522f <+118>:	callq  0x5555555550b0 <dlerror@plt>
+   0x0000555555555234 <+123>:	mov    %rax,%rdx
+   0x0000555555555237 <+126>:	mov    0x2e42(%rip),%rax        # 0x555555558080 <stderr@@GLIBC_2.2.5>
+   0x000055555555523e <+133>:	lea    0xe2e(%rip),%rsi        # 0x555555556073
+   0x0000555555555245 <+140>:	mov    %rax,%rdi
+   0x0000555555555248 <+143>:	mov    $0x0,%eax
+   0x000055555555524d <+148>:	callq  0x555555555050 <fprintf@plt>
+   0x0000555555555252 <+153>:	mov    $0x1,%edi
+   0x0000555555555257 <+158>:	callq  0x555555555080 <exit@plt>
+   0x000055555555525c <+163>:	mov    -0x10(%rbp),%rax
+   0x0000555555555260 <+167>:	mov    %rax,%rsi
+   0x0000555555555263 <+170>:	lea    0xe0d(%rip),%rdi        # 0x555555556077
+   0x000055555555526a <+177>:	mov    $0x0,%eax
+   0x000055555555526f <+182>:	callq  0x555555555040 <printf@plt>
+   0x0000555555555274 <+187>:	mov    -0x10(%rbp),%rax
+   0x0000555555555278 <+191>:	lea    0xe03(%rip),%rsi        # 0x555555556082
+   0x000055555555527f <+198>:	mov    %rax,%rdi
+   0x0000555555555282 <+201>:	callq  0x5555555550a0 <dlsym@plt>
+   0x0000555555555287 <+206>:	mov    %rax,-0x8(%rbp)
+--Type <RET> for more, q to quit, c to continue without paging--
+   0x000055555555528b <+210>:	cmpq   $0x0,-0x8(%rbp)
+   0x0000555555555290 <+215>:	jne    0x5555555552bc <main+259>
+   0x0000555555555292 <+217>:	mov    0x2de7(%rip),%rax        # 0x555555558080 <stderr@@GLIBC_2.2.5>
+   0x0000555555555299 <+224>:	mov    %rax,%rcx
+   0x000055555555529c <+227>:	mov    $0x1d,%edx
+   0x00005555555552a1 <+232>:	mov    $0x1,%esi
+   0x00005555555552a6 <+237>:	lea    0xdda(%rip),%rdi        # 0x555555556087
+   0x00005555555552ad <+244>:	callq  0x555555555090 <fwrite@plt>
+   0x00005555555552b2 <+249>:	mov    $0x1,%edi
+   0x00005555555552b7 <+254>:	callq  0x555555555080 <exit@plt>
+   0x00005555555552bc <+259>:	mov    -0x8(%rbp),%rax
+   0x00005555555552c0 <+263>:	mov    %rax,%rsi
+   0x00005555555552c3 <+266>:	lea    0xddb(%rip),%rdi        # 0x5555555560a5
+   0x00005555555552ca <+273>:	mov    $0x0,%eax
+   0x00005555555552cf <+278>:	callq  0x555555555040 <printf@plt>
+   0x00005555555552d4 <+283>:	lea    0x2d3d(%rip),%rdx        # 0x555555558018 <puts@got.plt>
+   0x00005555555552db <+290>:	mov    -0x8(%rbp),%rax
+   0x00005555555552df <+294>:	mov    %rax,(%rdx)
+   0x00005555555552e2 <+297>:	lea    0xdd4(%rip),%rdi        # 0x5555555560bd
+   0x00005555555552e9 <+304>:	callq  0x555555555030 <puts@plt>
+=> 0x00005555555552ee <+309>:	lea    0xdce(%rip),%rdi        # 0x5555555560c3
+--Type <RET> for more, q to quit, c to continue without paging--
+   0x00005555555552f5 <+316>:	callq  0x555555555030 <puts@plt>
+   0x00005555555552fa <+321>:	mov    -0x10(%rbp),%rax
+   0x00005555555552fe <+325>:	mov    %rax,%rdi
+   0x0000555555555301 <+328>:	callq  0x555555555070 <dlclose@plt>
+   0x0000555555555306 <+333>:	mov    $0x0,%eax
+   0x000055555555530b <+338>:	leaveq
+   0x000055555555530c <+339>:	retq
+   End of assembler dump.
+
+
+//we follow the steps we followed above in order to step forward two instructions
+//in order to get into the PLT entry for puts
+
+(gdb) si
+0x00005555555552f5	48	  puts ("world!");
+(gdb) si
+0x0000555555555030 in puts@plt ()
+(gdb) disas
+Dump of assembler code for function puts@plt:
+=> 0x0000555555555030 <+0>:	jmpq   *0x2fe2(%rip)        # 0x555555558018 <puts@got.plt>
+   0x0000555555555036 <+6>:	pushq  $0x0
+   0x000055555555503b <+11>:	jmpq   0x555555555020
+End of assembler dump.
+
+// when we examine the GOT we expect to see the real address of puts instead of
+//an address back in the PLT
+
+(gdb) x/gx 0x555555558018
+0x555555558018 <puts@got.plt>:	0x00007ffff7e5da40
+//gdb tells us that it is indeed the address of puts@got.plt
+
+//if we step another instruction, we are indeed at that address and it's
+in puts:
+
+(gdb) si
+0x00007ffff7e5da40 in puts () from /usr/lib/libc.so.6
+(gdb)
